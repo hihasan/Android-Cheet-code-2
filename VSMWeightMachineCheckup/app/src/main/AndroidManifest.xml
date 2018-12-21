@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hihasan.vsmweightmachinecheckup">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/vsm"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/vsm"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".StartupActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".NoInternetActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!--FIrst Menu-->
+        <activity
+            android:name=".weight.machine.WeightMain"
+            android:label="@string/health_checkup" />
+        <activity
+            android:name=".printer.machine.PrinterMain"
+            android:label="Printer Checkup" />
+        <activity
+            android:name=".change.machine.ChangeMain"
+            android:label="Change Machine" />
+        <activity
+            android:name=".system.change.SystemMain"
+            android:label="System Question" />
+
+
+    </application>
+
+</manifest>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vsm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8sp"/>
+
+    <TextView
+        android:id="@+id/helpline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/helpline"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/first_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/helpline"
+        android:layout_margin="16sp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16sp">
+
+            <TextView
+                android:id="@+id/first_contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mostofa Suza : "
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/first_contact_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01711438380"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_toRightOf="@+id/first_contact_name"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/second_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_contact"
+        android:layout_margin="16sp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16sp">
+
+            <TextView
+                android:id="@+id/second_contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hasan Al Mamun : "
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/Second_contact_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01737512549"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_toRightOf="@+id/second_contact_name"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/second_contact"
+        android:layout_margin="16sp"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:text="Close"/>
+
+
+
+</RelativeLayout>
