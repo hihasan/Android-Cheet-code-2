@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Random;
 
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -56,6 +58,97 @@ public class MainActivity extends AppCompatActivity {
                 buttonStop.setEnabled(false);
                 buttonPlayLastRecordAudio.setEnabled(false);
                 buttonStopPlayingRecording.setEnabled(false);
+
+                //btnStart()
+                buttonStart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if(checkPermission()) {
+
+                            AudioSavePathInDevice = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + CreateRandomAudioFileName(5) + "AudioRecording.3gp";
+
+                            MediaRecorderReady();
+
+                            try {
+                                mediaRecorder.prepare();
+                                mediaRecorder.start();
+                            } catch (IllegalStateException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                            buttonStart.setEnabled(false);
+                            buttonStop.setEnabled(true);
+
+                            Toast.makeText(MainActivity.this, "Recording started",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            requestPermission();
+                        }
+
+                    }
+                });
+
+                //btnStop()
+                buttonStop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mediaRecorder.stop();
+                        buttonStop.setEnabled(false);
+                        buttonPlayLastRecordAudio.setEnabled(true);
+                        buttonStart.setEnabled(true);
+                        buttonStopPlayingRecording.setEnabled(false);
+
+                        Toast.makeText(MainActivity.this, "Recording Completed",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                //btnStartPlaying()
+                buttonPlayLastRecordAudio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) throws IllegalArgumentException,
+                            SecurityException, IllegalStateException {
+
+                        buttonStop.setEnabled(false);
+                        buttonStart.setEnabled(false);
+                        buttonStopPlayingRecording.setEnabled(true);
+
+                        mediaPlayer = new MediaPlayer();
+                        try {
+                            mediaPlayer.setDataSource(AudioSavePathInDevice);
+                            mediaPlayer.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        mediaPlayer.start();
+                        Toast.makeText(MainActivity.this, "Recording Playing",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                //btnStopPlaying()
+                buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        buttonStop.setEnabled(false);
+                        buttonStart.setEnabled(true);
+                        buttonStopPlayingRecording.setEnabled(false);
+                        buttonPlayLastRecordAudio.setEnabled(true);
+
+                        if(mediaPlayer != null){
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                            MediaRecorderReady();
+                        }
+                    }
+                });
+
 
                 dialog.show();
             }
