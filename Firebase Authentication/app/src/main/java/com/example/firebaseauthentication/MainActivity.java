@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
                 String number = editText.getText().toString().trim();
 
-                if (number.isEmpty() || number.length() < 10) {
+                if (number.isEmpty()) {
                     editText.setError("Valid number is required");
                     editText.requestFocus();
                     return;
