@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 String phoneNumber = "+" + code + number;
+
+                Log.d("Hasan Number",phoneNumber);
 
                 Intent intent = new Intent(MainActivity.this, VerifyPhoneActivity.class);
                 intent.putExtra("phonenumber", phoneNumber);
