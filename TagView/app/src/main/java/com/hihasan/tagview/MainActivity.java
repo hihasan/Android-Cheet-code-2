@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         mTagContainerLayout1 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout1);
-//        mTagContainerLayout2 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout2);
-//        mTagContainerLayout3 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout3);
-//        mTagContainerLayout4 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout4);
         mTagcontainerLayout5 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout5);
 
         // Set custom click listener
@@ -87,45 +84,6 @@ public class MainActivity extends AppCompatActivity {
 //                mTagContainerLayout1.removeTag(position);
                 Toast.makeText(MainActivity.this, "Click TagView cross! position = " + position,
                         Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mTagContainerLayout3.setOnTagClickListener(new TagView.OnTagClickListener() {
-            @Override
-            public void onTagClick(int position, String text) {
-                List<Integer> selectedPositions = mTagContainerLayout3.getSelectedTagViewPositions();
-                //deselect all tags when click on an unselected tag. Otherwise show toast.
-                if (selectedPositions.isEmpty() || selectedPositions.contains(position)) {
-                    Toast.makeText(MainActivity.this, "click-position:" + position + ", text:" + text,
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    //deselect all tags
-                    for (int i : selectedPositions) {
-                        mTagContainerLayout3.deselectTagView(i);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onTagLongClick(final int position, String text) {
-                mTagContainerLayout3.toggleSelectTagView(position);
-
-                List<Integer> selectedPositions = mTagContainerLayout3.getSelectedTagViewPositions();
-                Toast.makeText(MainActivity.this, "selected-positions:" + selectedPositions.toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSelectedTagDrag(int position, String text) {
-                ClipData clip = ClipData.newPlainText("Text", text);
-                View view = mTagContainerLayout3.getTagView(position);
-                View.DragShadowBuilder shadow = new View.DragShadowBuilder(view);
-                view.startDrag(clip, shadow, Boolean.TRUE, 0);
-            }
-
-            @Override
-            public void onTagCrossClick(int position) {
             }
         });
 
