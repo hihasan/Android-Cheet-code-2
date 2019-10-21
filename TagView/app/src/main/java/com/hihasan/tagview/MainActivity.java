@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> list5 = new ArrayList<String>();
 
-
-
         mTagContainerLayout1 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout1);
         mTagcontainerLayout5 = (TagContainerLayout) findViewById(R.id.tagcontainerLayout5);
 
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTagCrossClick(int position) {
-//                mTagContainerLayout1.removeTag(position);
                 Toast.makeText(MainActivity.this, "Click TagView cross! position = " + position,
                         Toast.LENGTH_SHORT).show();
             }
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<int[]> colors = new ArrayList<int[]>();
-        //int[]color = {backgroundColor, tagBorderColor, tagTextColor, tagSelectedBackgroundColor}
         int[] col1 = {Color.parseColor("#ff0000"), Color.parseColor("#000000"), Color.parseColor("#ffffff"), Color.parseColor("#999999")};
         int[] col2 = {Color.parseColor("#0000ff"), Color.parseColor("#000000"), Color.parseColor("#ffffff"), Color.parseColor("#999999")};
 
