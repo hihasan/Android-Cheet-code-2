@@ -1,4 +1,4 @@
-package com.hihasan.tag;
+package com.hihasan.tagview;
 
 import org.junit.Test;
 
