@@ -9,9 +9,11 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.os.Environment;
 import android.util.Log;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     File myExternalFile;
     String myData = "";
     public Boolean isStoragePermissionGranted=true;
-
+    public static int  REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,67 +57,50 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Action Required!!!", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//                getPrivateAlbumStorageDir(getApplicationContext(),"/hihasan folder2");
-                isExternalStorageWritable();
-                //isExternalStorageReadable();
+                isExternalStorageWritable("Abul");
+
             }
 
         });
     }
 
     /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
+    public boolean isExternalStorageWritable(String fname) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            File file=new File(Environment.getExternalStorageState(),"/storage/extSdCard/Hakuna Matata");
-            if (!file.exists()){
-                file.mkdirs();
-                Toast.makeText(getApplicationContext(),"FOlder Created",Toast.LENGTH_SHORT).show();
+            String myfolder=Environment.getExternalStorageDirectory()+"/"+fname;
+            File f=new File(myfolder);
+            if(!f.exists())
+            {
+                if(!f.mkdir()){
+                    Toast.makeText(this, myfolder+" can't be created.", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                    Toast.makeText(this, myfolder+" can be created.", Toast.LENGTH_SHORT).show();
 
             }
-            else {
-                Toast.makeText(getApplicationContext(),"Folder Exists",Toast.LENGTH_SHORT).show();
-            }
+
+            else
+                Toast.makeText(this, myfolder+" already exits.", Toast.LENGTH_SHORT).show();
             return true;
         }
         Toast.makeText(getApplicationContext(),"Not Writeable",Toast.LENGTH_SHORT).show();
         return false;
     }
 
-    /* Checks if external storage is available to at least read */
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            Toast.makeText(getApplicationContext(),"Readable",Toast.LENGTH_SHORT).show();
-            return true;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION) {
+            int grantResultsLength = grantResults.length;
+            if (grantResultsLength > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "You grant write external storage permission. Please click original button again to continue.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "You denied write external storage permission.", Toast.LENGTH_LONG).show();
+            }
         }
-        Toast.makeText(getApplicationContext(),"Not Readable",Toast.LENGTH_SHORT).show();
-        return false;
-
-
-    }
-
-    public File getPrivateAlbumStorageDir(Context context, String albumName) {
-        // Get the directory for the app's private pictures directory.
-        File file = new File(context.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.exists()){
-            Log.e("Hihasan","FOlder Created");
-            file.mkdirs();
-            Toast.makeText(getApplicationContext(),"FOlder Created",Toast.LENGTH_SHORT).show();
-
-        }
-        else {
-            Log.e("Hihasan","Folder Exists");
-            Toast.makeText(getApplicationContext(),"Folder Exists",Toast.LENGTH_SHORT).show();
-        }
-//        if (!file.mkdirs()) {
-//            Log.e("Hihasan", "Directory not created");
-//        }
-        return file;
     }
 }
 
