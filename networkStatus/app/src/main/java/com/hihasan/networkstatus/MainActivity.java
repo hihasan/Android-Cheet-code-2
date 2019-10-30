@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Get the application context
-        MainActivity mContext = (MainActivity) getApplicationContext();
+//        MainActivity mContext = (MainActivity) getApplicationContext();
 
         // Change the action bar color
         getSupportActionBar().setBackgroundDrawable(
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean locationState = isLocationEnabled();
+                boolean locationState = isGPSEnabled();
                 if(locationState){
                     mTextView.setText("Location Service Is Enabled.");
 
