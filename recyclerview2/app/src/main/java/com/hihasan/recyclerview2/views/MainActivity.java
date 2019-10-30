@@ -1,9 +1,10 @@
-package com.hihasan.recyclerview2;
+package com.hihasan.recyclerview2.views;
 
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.hihasan.recyclerview2.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
