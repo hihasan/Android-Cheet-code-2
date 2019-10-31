@@ -7,15 +7,29 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.hihasan.searchview.adapter.ListViewAdapter;
+import com.hihasan.searchview.model.AnimalNames;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity
+        implements SearchView.OnQueryTextListener {
+
+    // Declare Variables
+    ListView list;
+    ListViewAdapter adapter;
+    SearchView editsearch;
+    String[] animalNameList;
+    ArrayList<AnimalNames> arraylist = new ArrayList<AnimalNames>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +46,43 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        // Generate sample data
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        animalNameList = new String[]{"Lion", "Tiger", "Dog",
+                "Cat", "Tortoise", "Rat", "Elephant", "Fox",
+                "Cow","Donkey","Monkey"};
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // Locate the ListView in listview_main.xml
+        list = (ListView) findViewById(R.id.listview);
+
+        for (int i = 0; i < animalNameList.length; i++) {
+            AnimalNames animalNames = new AnimalNames(animalNameList[i]);
+            // Binds all strings into an array
+            arraylist.add(animalNames);
         }
 
-        return super.onOptionsItemSelected(item);
+        // Pass results to ListViewAdapter Class
+        adapter = new ListViewAdapter(this, arraylist);
+
+        // Binds the Adapter to the ListView
+        list.setAdapter(adapter);
+
+        // Locate the EditText in listview_main.xml
+        editsearch =  findViewById(R.id.search);
+        editsearch.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+        adapter.filter(text);
+        return false;
     }
 }
