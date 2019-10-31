@@ -1,3 +1,6 @@
+//https://abhiandroid.com/ui/searchview
+//https://1000projects.org/
+
 package com.hihasan.searchview;
 
 import android.os.Bundle;
