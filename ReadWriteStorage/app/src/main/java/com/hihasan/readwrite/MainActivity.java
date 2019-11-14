@@ -10,6 +10,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -28,17 +30,13 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
-    Context context=this;
+   public Context context=this;
 
 
-    public static int  REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION=1;
+    private static final int MY_PERMISSIONS_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,57 +46,61 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-               getPrivateAlbumStorageDir(context,"Nadim4");
-//                File main=new File(String.valueOf(Environment.getExternalStorageDirectory().getAbsolutePath()));
-//                File[]t=main.getParentFile().listFiles();
-//                Log.e("Main",main.getAbsolutePath());
+                File folder = new File(Environment.getExternalStorageDirectory() + "/My New Folder");
+                boolean success = true;
+                if (!folder.exists()) {
+                    success = folder.mkdir();
+                }
+                if (success) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Done!")
+                            .setMessage("Please check your internal storage to make sure 'My New Folder' folder is created or not!:\n Go to 'Internal Storage > My New Folder'")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", null).show();
+
+                } else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Something went wrong!")
+                            .setMessage("Please make sure you have granted the storage permission.")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", null).show();
+
+                }
+
 
             }
 
         });
     }
 
-    /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(MainActivity.this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST);
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST);
+            }
         }
-        return false;
-    }
-
-
-    public File getPrivateAlbumStorageDir(Context context, String albumName) {
-        // Get the directory for the app's private pictures directory.
-        File file = new File(context.getExternalFilesDir(albumName).getAbsolutePath());
-        //File file=new File(context.getExternalStorageDirectory().getAbsolutePath()+"/"+albumName);//albumName;
-
-        //File file=context.getExternalStoragePublicDirectory(albumName);
-
-       // File file = new File(context.getExternalFilesDir(Environment.getExternalStorageState()), albumName);
-//        File directory = context.getFilesDir();
-//        File file = new File(directory, filename);
-        if (!file.mkdirs()) {
-            Log.e("Hihasan", "Directory not created");
-        }
-        else {
-            file.mkdirs();
-        }
-        return file;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION) {
-            int grantResultsLength = grantResults.length;
-            if (grantResultsLength > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "You grant write external storage permission. Please click original button again to continue.", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You denied write external storage permission.", Toast.LENGTH_LONG).show();
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(MainActivity.this, "Permission granted.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         }
     }
