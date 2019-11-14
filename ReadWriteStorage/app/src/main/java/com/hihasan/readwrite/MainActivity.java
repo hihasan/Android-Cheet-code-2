@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         //File file=context.getExternalStoragePublicDirectory(albumName);
 
        // File file = new File(context.getExternalFilesDir(Environment.getExternalStorageState()), albumName);
+//        File directory = context.getFilesDir();
+//        File file = new File(directory, filename);
         if (!file.mkdirs()) {
             Log.e("Hihasan", "Directory not created");
         }
