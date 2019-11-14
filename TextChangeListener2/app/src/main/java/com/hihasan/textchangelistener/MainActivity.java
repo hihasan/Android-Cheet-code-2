@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                if (total.getText().toString().equalsIgnoreCase("0") && ){
+
+                }
                 unit.setText(s);
                 total.setText(s);
             }

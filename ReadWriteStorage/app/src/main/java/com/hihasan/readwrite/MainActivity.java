@@ -35,16 +35,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-    EditText inputText;
-    TextView response;
-    Button saveButton, readButton;
     Context context=this;
 
-    private String FILENAME = "SampleFile.txt";
-    private String DNAME = "Hihasan";
-    File myExternalFile;
-    String myData = "";
-    public Boolean isStoragePermissionGranted=true;
+
     public static int  REQUEST_CODE_WRITE_EXTERNAL_STORAGE_PERMISSION=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isExternalStorageWritable("Abul");
+               getPrivateAlbumStorageDir(context,"Nadim4");
+//                File main=new File(String.valueOf(Environment.getExternalStorageDirectory().getAbsolutePath()));
+//                File[]t=main.getParentFile().listFiles();
+//                Log.e("Main",main.getAbsolutePath());
 
             }
 
@@ -65,28 +61,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable(String fname) {
+    public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            String myfolder=Environment.getExternalStorageDirectory()+"/"+fname;
-            File f=new File(myfolder);
-            if(!f.exists())
-            {
-                if(!f.mkdir()){
-                    Toast.makeText(this, myfolder+" can't be created.", Toast.LENGTH_SHORT).show();
-
-                }
-                else
-                    Toast.makeText(this, myfolder+" can be created.", Toast.LENGTH_SHORT).show();
-
-            }
-
-            else
-                Toast.makeText(this, myfolder+" already exits.", Toast.LENGTH_SHORT).show();
             return true;
         }
-        Toast.makeText(getApplicationContext(),"Not Writeable",Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+
+    public File getPrivateAlbumStorageDir(Context context, String albumName) {
+        // Get the directory for the app's private pictures directory.
+        File file = new File(context.getExternalFilesDir(albumName).getAbsolutePath());
+        //File file=new File(context.getExternalStorageDirectory().getAbsolutePath()+"/"+albumName);//albumName;
+
+        //File file=context.getExternalStoragePublicDirectory(albumName);
+
+       // File file = new File(context.getExternalFilesDir(Environment.getExternalStorageState()), albumName);
+        if (!file.mkdirs()) {
+            Log.e("Hihasan", "Directory not created");
+        }
+        else {
+            file.mkdirs();
+        }
+        return file;
     }
 
     @Override
