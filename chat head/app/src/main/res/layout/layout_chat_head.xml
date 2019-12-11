@@ -5,7 +5,8 @@
     android:layout_width="65dp"
     android:id="@+id/chat_head_root"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:targetApi="11">
 
     <!--Profile image for the chat head.-->
     <ImageView
