@@ -11,13 +11,14 @@
     <!-- Top Sliding Banners -->
 
     <RelativeLayout
+        android:id="@+id/banner"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="120sp" >
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="120sp"
             android:layout_alignParentTop="true" />
 
         <com.viewpagerindicator.CirclePageIndicator
@@ -30,8 +31,29 @@
             android:padding="10dip"
             app:centered="true"
             app:fillColor="#ff0099"
-            app:pageColor="#FF0000"
+            app:pageColor="@android:color/white"
             app:snap="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/banner"
+        android:layout_marginTop="8sp"
+        android:layout_centerHorizontal="true">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/design_bottom_sheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8sp"
+            android:text="Bottom Sheet"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/design_bottom_sheet_dialoug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8sp"
+            android:layout_toRightOf="@id/design_bottom_sheet"
+            android:text="Bottom Sheet Dialoug"/>
     </RelativeLayout>
 
 

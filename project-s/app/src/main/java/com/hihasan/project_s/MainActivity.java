@@ -1,5 +1,6 @@
 //https://www.androhub.com/android-image-slider-using-viewpager/
-//import com.viewpagerindicator.CirclePageIndicator;
+//Bottom Sheet Behaviour - https://androidwave.com/bottom-sheet-behavior-in-android/
+//Bottom Sheet Dialoug Fragment - https://androidwave.com/bottom-sheet-dialog-fragment-in-android/
 
 package com.hihasan.project_s;
 
@@ -49,8 +50,7 @@ public class MainActivity extends AppCompatActivity
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         for(int i=0;i<IMAGES.length;i++)
             ImagesArray.add(IMAGES[i]);
 
