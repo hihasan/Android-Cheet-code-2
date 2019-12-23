@@ -1,4 +1,6 @@
 //https://www.androhub.com/android-image-slider-using-viewpager/
+//import com.viewpagerindicator.CirclePageIndicator;
+
 package com.hihasan.project_s;
 
 import android.os.Bundle;
@@ -13,13 +15,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
 import android.view.View;
-//import com.viewpagerindicator.CirclePageIndicator;
+
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private CirclePageIndicator indicator;
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    private void init() {
+    private void init()
+    {
         for(int i=0;i<IMAGES.length;i++)
             ImagesArray.add(IMAGES[i]);
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         final float density = getResources().getDisplayMetrics().density;
 
-//Set circle indicator radius
+        //Set circle indicator radius
         indicator.setRadius(5 * density);
 
         NUM_PAGES =IMAGES.length;
@@ -106,5 +110,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 }

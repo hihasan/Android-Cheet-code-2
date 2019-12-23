@@ -1,4 +1,4 @@
-1. slider (viewpager)
+1. slider (viewpager) (DONE)
 2. Search Method
 3. chatting
 4. Fragment
