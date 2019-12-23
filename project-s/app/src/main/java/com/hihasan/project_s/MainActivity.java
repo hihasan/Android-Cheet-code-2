@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,18 +13,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+//import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    private CirclePageIndicator indicator;
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private static final Integer[] IMAGES= {R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.five};
+    private static final Integer[] IMAGES= {R.drawable.bkash,R.drawable.bkash,R.drawable.bkash,R.drawable.bkash};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     @Override
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        init();
     }
 
     private void init() {
@@ -53,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(new SlidingImageAdapter(MainActivity.this,ImagesArray));
 
 
-        CirclePageIndicator indicator = (CirclePageIndicator)
-                findViewById(R.id.indicator);
+        indicator = (CirclePageIndicator) findViewById(R.id.indicator);
 
         indicator.setViewPager(mPager);
 
