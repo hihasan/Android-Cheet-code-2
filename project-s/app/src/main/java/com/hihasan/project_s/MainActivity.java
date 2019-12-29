@@ -6,30 +6,43 @@ package com.hihasan.project_s;
 
 import android.os.Bundle;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
+    private AppCompatButton design_bottom_sheet, design_bottom_sheet_dialoug;
     private CirclePageIndicator indicator;
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private static final Integer[] IMAGES= {R.drawable.bkash,R.drawable.bkash,R.drawable.bkash,R.drawable.bkash};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+
+    TextView textViewBottomSheetState;
+    Button toggleBottomSheet;
+    BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +61,65 @@ public class MainActivity extends AppCompatActivity
         });
 
         init();
+
+        initViews();
+
+        // bind UI
+        toggleBottomSheet = findViewById(R.id.design_bottom_sheet);
+        //textViewBottomSheetState = findViewById(R.id.textViewState);
+        // get the bottom sheet view
+        ConstraintLayout bottomSheetLayout = findViewById(R.id.bottom_sheet);
+        // init the bottom sheet behavior
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+        // set callback for changes
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Toast.makeText(getApplicationContext(),"STATE HIDDEN",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Toast.makeText(getApplicationContext(),"STATE EXPANDED",Toast.LENGTH_SHORT).show();
+                        // update toggle button text
+                        Toast.makeText(getApplicationContext(),"Expand BottomSheet",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Toast.makeText(getApplicationContext(),"STATE COLLAPSED",Toast.LENGTH_SHORT).show();
+                        // update collapsed button text
+                        Toast.makeText(getApplicationContext(),"Collapse BottomSheet",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Toast.makeText(getApplicationContext(),"STATE DRAGGING",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Toast.makeText(getApplicationContext(),"STATE SETTLING",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                Log.d("TAG", "onStateChanged: " + newState);
+            }
+            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+        // set listener on button click
+        toggleBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    toggleBottomSheet.setText("Collapse BottomSheet");
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    toggleBottomSheet.setText("Expand BottomSheet");
+                }
+            }
+        });
+    }
+
+    private void initViews() {
+//        design_bottom_sheet = findViewById (R.id.design_bottom_sheet);
+//        design_bottom_sheet_dialoug = findViewById (R.id.design_bottom_sheet_dialoug);
+//
+//        design_bottom_sheet.setOnClickListener(this);
+//        design_bottom_sheet_dialoug.setOnClickListener(this);
     }
 
     private void init() {
@@ -109,5 +181,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+//        switch (v)
     }
 }
