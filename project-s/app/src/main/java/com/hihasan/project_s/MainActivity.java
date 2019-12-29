@@ -33,6 +33,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     private AppCompatButton design_bottom_sheet, design_bottom_sheet_dialoug;
+    private ConstraintLayout bottomSheetLayout;
     private CirclePageIndicator indicator;
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -64,61 +65,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initViews();
 
-        // bind UI
-        toggleBottomSheet = findViewById(R.id.design_bottom_sheet);
-        //textViewBottomSheetState = findViewById(R.id.textViewState);
-        // get the bottom sheet view
-        ConstraintLayout bottomSheetLayout = findViewById(R.id.bottom_sheet);
-        // init the bottom sheet behavior
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-        // set callback for changes
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        Toast.makeText(getApplicationContext(),"STATE HIDDEN",Toast.LENGTH_SHORT).show();
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        Toast.makeText(getApplicationContext(),"STATE EXPANDED",Toast.LENGTH_SHORT).show();
-                        // update toggle button text
-                        Toast.makeText(getApplicationContext(),"Expand BottomSheet",Toast.LENGTH_SHORT).show();
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        Toast.makeText(getApplicationContext(),"STATE COLLAPSED",Toast.LENGTH_SHORT).show();
-                        // update collapsed button text
-                        Toast.makeText(getApplicationContext(),"Collapse BottomSheet",Toast.LENGTH_SHORT).show();
-                        break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        Toast.makeText(getApplicationContext(),"STATE DRAGGING",Toast.LENGTH_SHORT).show();
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        Toast.makeText(getApplicationContext(),"STATE SETTLING",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                Log.d("TAG", "onStateChanged: " + newState);
-            }
-            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
-        // set listener on button click
-        toggleBottomSheet.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    toggleBottomSheet.setText("Collapse BottomSheet");
-                } else {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    toggleBottomSheet.setText("Expand BottomSheet");
-                }
-            }
-        });
     }
 
     private void initViews() {
-//        design_bottom_sheet = findViewById (R.id.design_bottom_sheet);
+        // bind UI
+        toggleBottomSheet = findViewById (R.id.design_bottom_sheet);
+        //textViewBottomSheetState = findViewById(R.id.textViewState);
+        // get the bottom sheet view
+        bottomSheetLayout = findViewById(R.id.bottom_sheet);
+
 //        design_bottom_sheet_dialoug = findViewById (R.id.design_bottom_sheet_dialoug);
 //
-//        design_bottom_sheet.setOnClickListener(this);
+        toggleBottomSheet.setOnClickListener(this);
 //        design_bottom_sheet_dialoug.setOnClickListener(this);
     }
 
@@ -185,6 +143,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-//        switch (v)
+        switch (v.getId()){
+            case R.id.design_bottom_sheet_dialoug:
+                bottomSheet();
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    private void bottomSheet() {
+        // init the bottom sheet behavior
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+        // set callback for changes
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Toast.makeText(getApplicationContext(),"STATE HIDDEN",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Toast.makeText(getApplicationContext(),"STATE EXPANDED",Toast.LENGTH_SHORT).show();
+                        // update toggle button text
+                        Toast.makeText(getApplicationContext(),"Expand BottomSheet",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Toast.makeText(getApplicationContext(),"STATE COLLAPSED",Toast.LENGTH_SHORT).show();
+                        // update collapsed button text
+                        Toast.makeText(getApplicationContext(),"Collapse BottomSheet",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Toast.makeText(getApplicationContext(),"STATE DRAGGING",Toast.LENGTH_SHORT).show();
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Toast.makeText(getApplicationContext(),"STATE SETTLING",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                Log.d("TAG", "onStateChanged: " + newState);
+            }
+            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+        // set listener on button click
+        toggleBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    toggleBottomSheet.setText("Collapse BottomSheet");
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    toggleBottomSheet.setText("Expand BottomSheet");
+                }
+            }
+        });
     }
 }
