@@ -8,27 +8,27 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/volume"
+        android:id="@+id/et1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:layout_margin="12sp"
         android:hint="Volume"/>
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/unit"
+        android:id="@+id/et2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12sp"
         android:inputType="numberDecimal"
-        android:layout_below="@id/volume"
+        android:layout_below="@id/et1"
         android:hint="Unit"/>
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/total"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12sp"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/unit"
-        android:hint="Total"/>
+<!--    <androidx.appcompat.widget.AppCompatEditText-->
+<!--        android:id="@+id/total"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="12sp"-->
+<!--        android:inputType="numberDecimal"-->
+<!--        android:layout_below="@id/unit"-->
+<!--        android:hint="Total"/>-->
 
 </RelativeLayout>
